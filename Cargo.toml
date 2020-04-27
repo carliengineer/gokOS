@@ -1,0 +1,23 @@
+[package]
+name = "gokOS"
+version = "0.1.0"
+authors = ["engineer"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+
+#Language items are special functions and types that are required internally by the compiler.
+#The eh_personality language item marks a function that is used for implementing stack unwinding. 
+#By default, Rust uses unwinding to run the destructors of all live stack variables in case of a panic.
+#Unwinding, however, is a complicated process and requires some OS specific libraries (e.g. libunwind on Linux or structured exception handling on Windows), so we don't want to use it for our operating system.
+#There are other use cases as well for which unwinding is undesirable, so Rust provides an option to abort on panic instead.
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+
+#we need to add bare metal target platfrom, as rust uses "target triple" which defines host settings (e.g. x86_64-unknown-linux-gnu) as default.
